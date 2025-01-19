@@ -1,0 +1,323 @@
+
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+\usepackage[verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,l
+margin=2.54cm,rmargin=2.54cm]{geometry}
+
+%References can be split up over multiple lines
+\usepackage{breakcites}
+\usepackage{times}
+
+\usepackage{amsmath}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{hyperref}
+
+%% The graphicx package provides the includegraphics command.
+\usepackage{graphicx}
+%% The amssymb package provides various useful mathematical symbols
+
+%%Allows text in equations
+\usepackage{amssymb}
+%%Make sure caption does not stick to the table
+\usepackage{caption} \captionsetup[table]{skip=10pt}
+%%Multiple rows in complex tables
+\usepackage{multirow}
+
+%%Two figures aside
+\usepackage{caption}
+\usepackage{subcaption}
+
+%%Floatbarrier prevents figures to be above section title 
+\usepackage{placeins}
+
+%%Forced line break within cell
+\usepackage{makecell}
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{floatrow}
+
+%Packages for running title
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%re-scale tables 
+\usepackage{graphics}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+\usepackage{lineno}
+
+%% Double space
+\usepackage{setspace}
+
+%% Roman letters
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+%Acknowledgments
+\newcommand{\ackname}{Acknowledgments}
+
+%Authors’ contributions
+\newcommand{\autcont}{Authors’ contributions}
+
+%Data accessibility 
+\newcommand{\datacc}{Data accessibility}
+
+\usepackage{moreverb} % for verbatim output
+
+% Glossary
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{glossaries}
+\usepackage{calc}
+\usepackage{booktabs}
+\usepackage{tabularx}% (for comparison)
+
+\journal{Ecological Informatics}
+
+% Running title
+\rhead{Uncertainty of passive telemetry data}
+\lhead{}
+\setlength{\marginparwidth}{2cm}
+
+\begin{document}
+%double spacing to facilitate the reviewing process
+\begin{spacing}{1.9}
+%%\begin{flushleft}
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+\title{%
+Quantifying and reducing epistemic uncertainty of passive acoustic telemetry data from longitudinal aquatic systems \\
+\large }
+
+\author{Stijn Bruneel$^{1,2\ast}$, Pieterjan Verhelst$^{2}$, Jan Reubens$^{3}$, Jan M. Baetens$^{4}$, Johan Coeck$^{5}$, Tom Moens$^{2}$, Peter Goethals$^{1}$}
+
+\address{$^{1}$Department of Animal Sciences and Aquatic Ecology, Ghent University, Coupure Links 653, 9000 Ghent, Belgium,
+
+$^{2}$Marine Biology Research Group, Ghent University, Krijgslaan 281, 9000 Ghent, Belgium,
+
+$^{3}$Flanders Marine Institute (VLIZ), Wandelaarkaai 7, 8400 Ostend, Belgium,
+
+$^{4}$Department of Data Analysis and Mathematical Modelling, Ghent University, Coupure Links 653, 9000 Ghent, Belgium
+
+$^{5}$Research Institute for Nature and Forest (INBO), Havenlaan 88, bus 73, 1000 Brussels, Belgium,
+
+$^\ast$To whom correspondence should be addressed; E-mail: stijn.bruneel@ugent.be}
+
+\begin{abstract}
+
+\linenumbers
+
+Passive acoustic telemetry data are used to study animal movement in aquatic environments, but tools to process the data are limited. In areas that are too large to be fully covered by the limited detection ranges of receivers or acoustic listening stations, researchers generally assume that animals are residing in an area when they are detected frequently at specific receivers. There is, however, no consensus on how this area and frequency should be spatially and temporally defined respectively, thereby introducing some unaccounted uncertainty of this residency-at-receivers. In longitudinal aquatic systems such as rivers or estuaries, strategically placed receivers are often used as gates or curtains through which tagged animals have to pass. Rather than being a proxy for the time spent near receivers, the detections can serve as boundary conditions to delineate the durations that animals spent between receivers (i.e. residency-between-receivers). As such, providing a spatial and temporal context to the detections and enabling the quantification of epistemic uncertainty. To assess the usefulness of this approach, we analyzed telemetry data for migrating eel in a longitudinal estuarine acoustic tracking network of 21 gates. Results revealed a logarithmic relationship between epistemic uncertainty and gate network resolution, which indicates that transferring information from the spatial to the temporal level has a positive effect on the epistemic uncertainty. The poor correlation between the at-receivers and the between-receivers approach indicates that the latter, although less precise, may be more accurate. It should be noted that the suggested approach assumes that the gates of receivers are perfect detectors. If tagged animals are able to pass these gates undetected the uncertainty will actually be higher than assumed. Our approach is therefore less suited for large open areas such as lagoons or seas where gates with high detection probabilities are logistically challenging. This approach allows the quantification and reduction of epistemic uncertainty by providing a spatiotemporal context to the detections. Since establishing and maintaining passive telemetry networks is generally expensive and the results these networks generate are often used in decision making, an assessment of the network quality and data uncertainty is vital.  
+
+\end{abstract}
+
+\begin{keyword}
+Epistemic uncertainty \sep Estuary \sep Fish \sep Gates \sep Network design \sep Passive acoustic telemetry curtains
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}
+\label{intro}
+
+Ecologists require sound data on the whereabouts of animals to understand their spatiotemporal movement behavior. To this end, telemetry techniques have already been used for decades to study migration and territorial delineations in both terrestrial and aquatic environments. GPS and ARGOS signals are widely used in terrestrial studies \citep{Hebblewhite2010,Svoboda2013}, but since these signals  can only propagate through air and not through water, their use for a direct determination of position in aquatic studies is mainly limited to surfacing aquatic animals such as turtles and sharks \citep{Fitzpatrick2012}. Acoustic telemetry offers a good alternative for aquatic environments, but actively tracking animals with acoustic tags is labor intensive and cost inefficient \citep{Heupel2006}. Therefore, in most aquatic studies, passive acoustic telemetry networks of receivers or acoustic listening stations are preferred \citep{Hedger2008,Thorstad2013b}. The main issue with these networks, however, is that animals need to move within the detection range of a receiver to be detected \citep{Both2013}. This can be solved by increasing the number of receivers to arrive at a full coverage of the study area. Furthermore, if detection ranges overlap it is even possible to obtain quite precise and accurate position estimates through triangulation \citep{Cooke2005}. Nevertheless, keeping in mind the limited detection ranges of receivers and the vast spatial extent of some study areas, such networks are logistically challenging or even impossible in larger areas. 
+
+In large water bodies, position estimates are generally short-term areas of activity rather than point estimates. If a tagged animal is detected at a receiver or small group of receivers with overlapping detection ranges, it is present within the detection range of the receiver(s) \citep{Kessel2014}. Practically, if the time between successive detections at the same receiver(s) is smaller than a user-defined absence threshold, the tagged animal is considered to be resident in a short-term area of activity around the receiver(s) during that time \citep{Capello2015ATelemetry}. This residency is dependent on the absence threshold, the time between detections and the detection number or the "activity" of the tag. If tagged animals move regularly between receivers, scattered throughout the study area, without being detected, outcomes from this approach may be questionable. Furthermore, the estimated residencies at receivers cannot be well defined spatially nor temporally because of the variable and unknown detection range, the time lags between transmissions of tags and the random movement of tagged fish. Hence, the uncertainty on these residencies-at-receivers cannot be assessed properly. \citep{Ohta2005,Topping2011SiteMonitoring,Capello2015ATelemetry}.
+
+To deal with this, one could group nearby receivers into a single gate that tagged animals need to pass in order to leave the concerned study area \citep{Heupel2006,Hobday2011EstimatingArrays,Steckenreuter2017,Kraus2018}. The detections at the different gates serve as boundary conditions to determine the position of  the tagged animals between these gates (i.e. residency-between-receivers). Vital to this approach is a correct assessment of the detection probability \citep{Hobday2011EstimatingArrays}; if tagged animals are able to pass gates without being detected, assuming that a tagged animal resides between two gates of receivers may be questionable and determining the residencies at receivers may be the only viable option. Therefore, in wide open waters, using gates of receivers may be impractical, but in longitudinal systems such as rivers and even estuaries, their use is typically more appropriate \citep{Heupel2006,Steckenreuter2017,Kraus2018,Dwyer2019UsingSpecies}.
+
+In this study we describe how the use of gates allows the quantification of epistemic uncertainty and network efficiency in rivers and estuaries without the need for receivers to cover the entire study area. Epistemic or systematic uncertainty is defined as the uncertainty arising from the inability of exactly point locating tagged fish and is therefore associated with a lack of knowledge (it should not be confused with aleatoric or statistical uncertainty which entails the detection probability of gates and stochasticity of animal behavior \citep{Fox2011DistinguishingUncertainty}). For this approach, rather than considering point estimates, fish are assumed to be present in the area between two or more gates. We assessed how gate network resolution, the number of sections between gates of which the residency is determined, has an effect on the involved epistemic uncertainty. It is important to note that lowering the gate network resolution does not imply that a gate has been omitted from the analysis. By reducing the number of sections, some gates may not function as a boundary for a section anymore, but their detections are still used to validate the position estimates and as such reduce the epistemic uncertainty. Actual omission of a gate from the network may, however, be necessary at some point to reduce costs \citep{Brownscombe2019ConductingManagers}. The suggested approach allowed to determine which gate should be removed to have the lowest possible increase in epistemic uncertainty. We analyzed telemetry data of migrating eel (\textit{Anguilla anguilla}), a catadromous fish known to migrate along the Scheldt estuary towards the North Sea, using both the between-receivers and at-receivers approach. Given the practical limitations entailing gates of receivers, we assessed whether the at-receivers approach provides an acceptable alternative. We also conducted a smaller study of flounder (\textit{Platichthys flesus}) carrying a different type of acoustic tag to assess whether a species and/or tag specific evaluation is necessary \citep{Dance2016DoesResearch}. Finally, as the main aim of this study was to assess epistemic uncertainty, the statistical uncertainty, which is the result of imperfect detectability, was not integrated in the uncertainty estimates described in this study. However, as integration of both epistemic and statistical uncertainty is a vital next step in the uncertainty quantification of passive acoustic telemetry data, we discuss some potential approaches to support future studies.
+
+\begin{table}[h]
+\centering
+\scalebox{0.7}{%
+{\renewcommand\arraystretch{1.25}
+\begin{tabular}{lll} \hline
+\multicolumn{2}{l}{Glossary} \\ \hline\hline                                                            
+Epistemic uncertainty & \multicolumn{2}{p{10cm}}{\raggedright Epistemic uncertainty is defined as the uncertainty arising from the inability of exactly point locating tagged animals. It is quantified as the range of the residency-between-receivers intervals.} \\ 
+Gate & \multicolumn{2}{p{10cm}}{\raggedright Series of receivers that delineate an area. Tagged animals need to pass these gates to leave the area.} \\   
+Gate network resolution & \multicolumn{2}{p{10cm}}{\raggedright Number of sections between gates of which the residencies-between-receivers are determined.} \\ 
+Residency-between-receivers & \multicolumn{2}{p{10cm}}{\raggedright Duration over which a tagged animal is considered to be present in the area between two gates.} \\ 
+Residency-at-receivers & \multicolumn{2}{p{10cm}}{\raggedright Duration over which a tagged animal is considered to be present in a specific short-term area of activity around a gate. } \\ 
+Statistical uncertainty & \multicolumn{2}{p{10cm}}{\raggedright Statistical uncertainty is defined as the sampling variability caused by the inherently irreducible stochasticity of detectability and animal movement.} \\ \hline
+
+\end{tabular}}}
+\end{table}
+
+\section{Materials and methods}
+
+\subsection{Study area}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.6]{receivernetwork.pdf}
+  \caption{The Schelde Estuary comprises the Zeeschelde (Ghent-Antwerp) and Westerschelde (Antwerp-Vlissingen). Receivers are represented as orange circles. The gates are indicated as labels for different groups of receivers. The weir in Ghent and the weir in Mechelen where the eels and flounders were caught and released are depicted as red crosses. }
+  \label{fig:network}
+\end{figure}
+
+The Schelde Estuary is a well-mixed estuary of 160 km long without transversal man-made migration barriers and characterized by strong currents, high turbidity and a large tidal amplitude up to 6 m \citep{Cornet2016}. The estuary can be divided in two regions (upstream to downstream): the Zeeschelde, which spans 105 km from Ghent to Antwerp (Belgium), and the Westerschelde, which covers the 55 km from Antwerp to the mouth of the estuary at Vlissingen (The Netherlands). The width of the Zeeschelde varies between 50 to 1350 m while the width of the Westerschelde varies between 2000 and 8000 m (Fig. \ref{fig:network}). 
+
+\subsection{Tagging procedure}
+
+At the tidal weir in Merelbeke (Ghent), 100 eels were caught and subsequently internally tagged with V13 (VEMCO Ltd., Canada) coded acoustic transmitters \citep{Verhelst2018}. After capture, surgery and recovery \citep{Thorstad2013b}, fish were released at the nearest receiver. Of the 100 tagged eels, 58 migrated and from these 58 eels, 38 started their migration from Ghent and reached Antwerp. The migration period of these 38 eels was determined \citep{Verhelst2018} and used for further analysis. We additionally tagged four flounders at the weir in Mechelen of the Dijle river, a tributary of the Scheldt estuary via the Rupel, with external V7 tags to assess whether the detection probability of the network is tag type and/or species specific. Since the factors species and tag type were confounded, it was not possible to determine which factor was responsible for observed differences. A more detailed description of the tagging procedure is provided in \ref{Taggingprocedure}.  
+
+\subsection{Acoustic network}
+
+Within the framework of the Belgian LifeWatch observatory, a permanent longitudinal network of receivers (VR2W, VEMCO Ltd, Canada) has been deployed since the spring of 2014 in the Schelde Estuary \citep{Reubens2019TheNetwork}. Currently, the network consists of 64 receivers which were combined into 21 gates (Table \ref{gate list}). In the Westerschelde, 39 receivers are moored on marine navigational buoys in three gates, which are in fact three bands of receivers stretching from shore to shore (from east to west: ws1: six receivers, average interdistance: 800 m; ws2: 21 receivers, average interdistance: 909 m and ws3: 12 receivers, average interdistance: 1132 m) (Fig. \ref{fig:network}). In the Zeeschelde, 25 receivers are deployed from the river bank. These 25 receivers are combined in 18 gates, which are on average 4969 m apart. At four locations (s15, s16, s17 and s18), a receiver on each side of the estuary was deployed to cover the whole width. The exact detection range for the different receivers in both the Westerschelde and Zeeschelde was unknown, but ranges between 300 m and 1000 m. Results from the network in the North Sea suggest that it is strongly dependent on current strength and wave action and will therefore be characterized by a strong spatial and temporal variability \citep{Reubens2018}.
+
+\subsection{Data processing and analysis}
+
+\subsubsection{Detection probability}
+
+The detection probability was estimated using the conditional nature of fish movement throughout the system \citep{Brownscombe2019ConductingManagers}. Since there are no other pathways to the North Sea, tagged fish have to pass the different gates in a well-defined order and detection probability can be defined as the probability of detecting a tag moving past a specific gate \citep{Melnychuk2012,Perry2012UsingData}. The estimated detection probability was adjusted for any malfunctioning receivers or receivers that were installed later. Since the width of the Zeeschelde at the different gates is on average 236 meter and the detection range lies between 300 and 1000 meter, it is expected that the receivers will provide good coverage from shore to shore. However, in the Westerschelde, where the distance between the receivers of a single gate is on average 960 meter, it is expected that the coverage will be considerably less. We assumed that tagged fish only reach the North Sea when they are detected a the last gate or at the network of the North Sea. The network in the North Sea, which consists of 27 receivers scattered over a surface of 3,454 km$^2$, provided detections for six out of the 38 eels. Three of them were detected at the last gate too, but the other three were able to pass the last and second last gate undetected. The detection probabilities in the Zeeschelde and Westerschelde were 97.0 \% and 62.5 \% respectively while the overall detection probability was 95.5 \%. An estimate of the detection probability under the assumption that tagged fish reach the North Sea either way, even when they are not detected at any of the last three gates, is given in \ref{tab:det.prob.cases}.
+
+\subsubsection{Residencies-at-receivers and residencies-between-receivers}
+
+The main difference between the at-receivers and between-receivers approach, is the way in which detections are grouped in detection groups. For the at-receivers approach, all successive detections at one gate with a time lapse between them smaller than the absence threshold, are grouped. The summed time lapses of all these detection groups for one gate yield the residency at that specific gate of receivers (i.e. residency-at-receivers).  
+For the between-receivers approach, the time lapse between the detections is of no interest to group the detections. The main difference between the detection groups is whether the detections occurred at one gate or at two different gates (Fig. \ref{fig:detectionInterval}). 
+If two successive detections occur at different gates, these detections are grouped in pairs. It does not matter whether these gates are neighboring (type 1A) or not (type 1B). The time lapse between these detections indicates the duration that the tagged animal spent between the two gates. 
+If successive detections occur at the same gate, those are grouped as well. Such a detection group resembles those estimated for the at-receivers approach, but with an infinite absence threshold. The time lapse between these detections indicates the duration that the tagged animal spent between the active gates (given that their detection probability is acceptable) neighboring the gate of interest as we do not know at which side of the latter the fish is located. The summed time lapses of all these detection groups for the area between two gates yield the residency between those specific gates of receivers (i.e. residency-between-receivers). 
+
+\begin{figure}[h!]
+  \centering\includegraphics[scale=0.25]{figure_detection_intervals.pdf}
+  \caption{Distinction between the different types of detection groups. Three different gates \RNum{1}, \RNum{2} and \RNum{3} (black points) with their corresponding detection ranges (dotted circles) are visualized in a river stretch. A cross depicts a detection at the concerning gate. In A, detection group type 1A is depicted. It consists of a pair of subsequent detections at two different neighboring gates. In B, detection group type 1B is depicted. It consists of a pair of subsequent detections at two different non-neighboring gates. In C, detection group type 2 is depicted. It consists of a group of at least two subsequent detections at one gate.}
+  \label{fig:detectionInterval}
+\end{figure}
+
+Since some detection groups overlap in space and may contain multiple gates, tagged animals cannot always be positioned with certainty between two neighboring gates at a specific moment in time. Instead they may be positioned with certainty between non-neighboring gates which are located further apart. Therefore a specific residency-between-receivers will often not be estimated exactly, but will fall within an interval of possible values. The range of this interval is referred to as the epistemic uncertainty. A more practical example is given in \ref{Dataprocessing}. As the main aim of this study was to assess epistemic uncertainty, the statistical uncertainty arising from detection probabilities lower than 100 \% in combination with stochastic animal movement was not integrated in the uncertainty estimates described in this study. 
+
+The residencies-between-receivers were divided by the distance between the gates for two reasons. First, as a means of normalization. Second, to allow for a comparison with the residencies-at-receivers, since the residencies-at-receivers are actually the estimated durations within a short-term activity area. The actual surface of the short-term activity area cannot be quantified as it is dependent on both the detection range and the absence threshold, but it may be considered constant if the detection range and absence threshold are assumed to be linearly related to the short-term activity area. 
+
+To determine the trade-off between gate network resolution, or the percentage of sections between gates included, and epistemic uncertainty, all different combinations of sections bordered by gates were assessed. For every gate network resolution, different combinations could be constructed. For every fish and every gate network resolution the combination with the lowest average epistemic uncertainty was retained. A more elaborate example of the methodology is provided in \ref{Dataprocessing}. A linear mixed effects model with log-transformed epistemic uncertainty as response, gate network resolution as fixed effect and eel as random effect was constructed. A similar approach of evaluating epistemic uncertainty against gate network resolution was used to evaluate the effect of omitting specific gates from the network entirely (\ref{Fig}). 
+
+\subsubsection{Comparison of the at-receivers and between-receivers approach}
+
+Although the at-receivers approach and between-receivers approach are conceptually different, their relative results should be comparable. Both approaches are used to estimate the duration that tagged fish spend in specific areas. To this end, for each residency at a specific gate the corresponding residency-between-receivers was determined as the duration per unit of distance between the two neighboring gates of the gate at stake. At first glance there might seem to be a mismatch in the units used for the residencies-between-receivers (hours per 100 meter) and residencies-at-receivers (hours). However, as mentioned earlier, a residency-at-receivers is actually the duration that a tagged fish spent in an unknown but presumedly constant short-term area of activity. Rather than selecting an arbitrary value for this area, we have chosen to underline this limitation by not doing so. The detection range could be a good proxy for the short-term area of activity, but because of its earlier mentioned variable nature in the study area it was not included in this study. 
+
+Because of the spatial overlap of the detection groups, the actual value of a residency-between-receivers cannot always be determined exactly. Instead an interval of possible values, i.e. epistemic uncertainty, is determined. Because the nature of the probability distribution of the intervals was considered unknown, Monte Carlo permutations were used to compare the residency-between-receivers intervals with the corresponding residencies-at-receivers, which could be estimated exactly. 10$^{6}$ repeats for each absence threshold, ranging from 0 to 100 hours in steps of one hour, were used to randomly select values from each residency-between-receivers interval. Pearson's correlation coefficients (\textit{r}) of each simulation were determined. R statistical software (version 3.5.0, R Developer Core Team, R Foundation for Statistical Computing, Vienna, Austria, https://www.R-project.org) was used.  
+
+\section{Results}
+
+\subsection{Residencies-between-receivers}
+
+The trade-off between epistemic uncertainty and gate network resolution of different gate combinations of different tagged eels is depicted in Fig. ~\ref{fig:Pareto}. The output of the linear mixed effects model confirms a significant positive effect of reducing the gate network resolution on the epistemic uncertainty (Table \ref{tab:Mixed_Model}). The logarithmic relationship between uncertainty and resolution illustrates that a small reduction in resolution can have a large positive effect on the uncertainty.
+
+\begin{figure}[h!]
+  \centering\includegraphics[scale=0.4]{Pareto_combo_final_grey_jb.pdf}
+  \caption{Trade-off between normalized epistemic uncertainty (vertical axis) and gate network resolution (horizontal axis). Epistemic uncertainty was normalized for visualization purposes. In (A) this trade-off is given for all tagged eel separately, while in (B) the average (gray; triangle) and median (black; circle) trade-offs are visualized. The 95\% confidence interval of the average trade-off is visualized as a gray envelope.}
+  \label{fig:Pareto}
+\end{figure}
+
+\begin{table}[h!]
+\centering
+\scriptsize
+\caption{Output of the fixed effects of the linear mixed effects model with log-transformed epistemic uncertainty as response, gate network resolution as fixed effect and eel as random effect. The values, standard errors (SE), degrees of freedom (DF), t-values and p-values are given.}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\hline
+Fixed effect~         & Value    & SE      & DF   & t-value & p-value            \\ 
+\hline
+intercept             & -10.12207 & 0.1459427 & 636 & -69.35648 &       0            \\ 
+\hline
+Resolution            & 0.1225233 & 0.001078145 & 636 & 113.64265 &      0  \\
+\hline
+\end{tabular}
+\label{tab:Mixed_Model}
+\end{table}
+
+On average, combining two sections, which coincides in our setting with a reduction in gate network resolution of 5 \%,  leads to an average decrease in epistemic uncertainty of 47 \%. Reducing the gate network resolution by 10, 15 and 20 \% leads to an average reduction in epistemic uncertainty of 72, 84 and 90 \% respectively. The optimal combination of sections for a specific gate network resolution differed between tagged eels. Therefore, one tagged eel was randomly selected to illustrate the principle of combining sections in an optimal way  (Fig.~\ref{fig:Resistance_model} and Fig. \ref{fig:Flow_chart}). In appendix, more examples for different eels are given (Fig. \ref{fig:Resistance_model2} and Fig. \ref{fig:Resistance_model3}) and a suggestion is provided on how to obtain an overview of the entire population (Fig. \ref{fig:overall_uncertainty}). In Fig. \ref{fig:Resistance_model_flounder}, the principle of combining sections in an optimal way is given for one out of four randomly selected flounders.
+
+\begin{figure}[h!]
+  \centering\includegraphics[scale=0.45]{Resistance_model2_jb_eel.pdf}
+  \caption{Residency-between-receivers (hours/100m) in function of distance from Ghent (km). Combinations of sections bordered by gates for eel "A69-1601-52622" with different levels of gate network resolution and different levels of average epistemic uncertainty are depicted. The range between the minimum and maximum value of the residencies-between-receivers, i.e. the epistemic uncertainty, is represented by the red boxes.}
+  \label{fig:Resistance_model}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering\includegraphics[scale=0.45]{flounder_res_model_jb.pdf}
+  \caption{Residency-between-receivers (hours/100m) in function of distance from Ghent (km). Combinations of sections bordered by gates for flounder "A69-1601-34454" with different levels of gate network resolution and different levels of average epistemic uncertainty are depicted. The range between the minimum and maximum value of the residencies-between-receivers, i.e. the epistemic uncertainty, is represented by the red boxes.}
+  \label{fig:Resistance_model_flounder}
+\end{figure}
+
+The linear mixed effects model revealed a significant negative effect on the epistemic uncertainty of omitting a gate from the analysis (\textit{p}<0.05) (Table \ref{lmer model stations removed} and Fig. \ref{fig:Pareto_stations_removed}). Post-hoc tests with Bonferroni correction revealed that the removal of Gates ws2, ws1, s4 and s12 lead to a significantly higher epistemic uncertainty than the removal of Gates s10 and s11. 
+
+\subsection{Comparison of the at-receivers and between-receivers approach}
+
+The linear correlation between residencies-at-receivers and corresponding residencies-between-receivers was weak with Pearson's correlation coefficient ranging from 0.33 to 0.45. The absence threshold did not have a meaningful effect on this, although the correlation seemed to improve slightly with increasing absence threshold. This is probably because the residencies-at-receivers became more similar to the type 2 detection groups of the between-receivers approach (Figure \ref{fig:correlation}). After 70 hours this trend stabilized because eel did not spend more than 70 hours between two gates. 
+
+\begin{figure}[h!]
+  \centering\includegraphics[scale=0.35]{Map_Network_Analysis.pdf}
+  \caption{These maps visualize the residencies in the network of the Schelde Estuary of one tagged eel "A69-1601-52622". Gates are represented as nodes and the sections between the gates are represented as lines. In (A) the estimated residencies-at-receivers (absence threshold of 70 hours) are depicted. In (B) and (C) the estimated minimum and maximum, respectively, of the residency-between-receivers intervals are visualized. This combination of sections bordered by gates has an average epistemic uncertainty of 1.1367 hours/100 meter and a gate network resolution of 100 \% (Fig. \ref{fig:Resistance_model}). Figures (D) and (E) also represent the minimum and maximum, respectively, of the residency-between-receivers intervals. This combination has an average epistemic uncertainty of  0.1647 hours/100 meter and a gate network resolution of 75 \% (Fig. \ref{fig:Resistance_model}).}
+  \label{fig:Map_Network_Analysis}
+\end{figure}
+
+Maps of the estimated residencies-at-receivers (absence threshold of 70 hours) of tagged eel "A69-1601-52622" were constructed (Fig.~\ref{fig:Map_Network_Analysis} (A)) to visually compare with the outcomes of the section combinations of the concerning tagged eel using the between-receivers approach. In Fig.~\ref{fig:Map_Network_Analysis} (B) and Fig.~\ref{fig:Map_Network_Analysis} (C), respectively, the minimum and maximum values of the residency-between-receivers intervals of a combination with a gate network resolution of 100 \% are visualized. A large difference between the minimum and maximum value corresponds with a high epistemic uncertainty. The epistemic uncertainty reduces significantly (\textit{p}<0.05; Table \ref{tab:Mixed_Model}) when lowering the gate network resolution by 25 \% as can be seen in Fig.~\ref{fig:Map_Network_Analysis} (D) and Fig.~\ref{fig:Map_Network_Analysis} (E). 
+
+\section{Discussion}
+\label{Disc}
+
+\subsection{Assessment of a passive acoustic telemetry network}
+\label{subsec:Assessment of a passive acoustic telemetry network}
+
+The success of this approach to determine the approximate position of tagged individuals at any time and to assess the epistemic uncertainty, strongly depends on the detection probability \citep{Heupel2006,Melnychuk2012,Reubens2018}. If tagged fish are able to pass certain gates without being detected, uncertainty may actually be higher than estimated, because gates are assumed to have a perfect detection probability. Gates with low detection probabilities should therefore be treated with care. Although Gate ws3 had a low detection probability (45.16 \%), it was still considered as a valuable gate since the long stretch of the Westerschelde has only a limited number of gates. 
+
+Since maintaining networks is expensive  and network assessment methods are limited, a standardized approach to optimize the telemetry network is invaluable \citep{Steckenreuter2017,Kraus2018}. In this study it turned out that the simulated removal of any gate had a significant effect on the epistemic uncertainty. When omitting a gate from the network, the epistemic uncertainty increases (Figure \ref{fig:Pareto_stations_removed}). The stronger this increase, the more important the gate. The removal of Gates ws2, ws1 and s12 had a bigger impact on the epistemic uncertainty than the removal of Gates s10 and s11. This is probably because of the low detection probabilities of the surrounding gates of Gates ws2, ws1 and s12 which contribute to more spatially overlapping detection groups, invoking higher levels of epistemic uncertainty. When selecting a gate for removal one should also take into account other aspects besides epistemic uncertainty such as the detection probability itself and the coverage of potentially interesting river stretches. For example, removing Gates ws2 and ws1 might not be the preferred option in terms of epistemic uncertainty, but it could be in terms of detection probability and required number of receivers (see further). 
+
+In case the detection probability is relatively low, epistemic uncertainty can be very high \citep{Melnychuk2012}. This was for example the case for flounder (Fig. \ref{fig:Resistance_model_flounder}) where average detection probability was only 39.17 \% (Table \ref{gate list}) and average epistemic uncertainty was $2.43\,\pm $2.73 (SD) while for eel this was 90.71 \% and $0.99\,\pm $0.70 (SD) respectively. Although the number of studied flounder individuals was limited, the low detection probability of flounder compared to eel, indicates that a species and/or tag-type specific assessment of the network is necessary to optimally process the data. To improve the detection probability more receivers could be positioned more closely to one another, higher power tags could be used, or the intervals between tag pulses could be reduced \citep{Clements2005}. For example, three out of the 38 tagged eels had a tag with a lower power output and two of them had the lowest and second lowest detection probability respectively (Table \ref{tag_list}).
+
+\subsection{Residencies-between-receivers}
+ 
+To this day, telemetry studies focusing on the epistemic uncertainty of position estimates in aquatic environments have been few \citep{Pedersen2013,Roy2017,Steckenreuter2017}. However, to locate migration barriers and home ranges, researchers need to be aware of the time animals spend on and between locations and to do so they require sound statistical methods, which are able to quantify the uncertainty tied up with imperfect data. The estimated residencies-between-receivers allow to assess the time that each fish spends within every combination of sections bordered by gates. The large range of a residency-between-receivers interval indicated a large uncertainty regarding the real time spent between gates. Combinations with a lower gate network resolution, had a significantly lower average uncertainty (Figure \ref{fig:Pareto}). Reducing the gate network resolution from 100 to  80 \% decreased the average epistemic uncertainty from 100 to 10 \%. The reason for this is twofold. First, the reduction in gate network resolution resulted in more gates being within the different sections. These gates did not serve as detection borders to allocate position estimates to a specific section, but validated the position estimates within different sections. Second, combining the sections was not done haphazardly. For each unit decrease of gate network resolution, the combination with the lowest uncertainty and lowest amount of overlapping detection groups was retained. 
+
+When researchers decide to reduce epistemic uncertainty at the cost of the gate network resolution, results will be less conclusive, but more reliable. Therefore, combinations with high gate network resolutions may be faced with too high an epistemic uncertainty to make sound conclusions, compared to combinations with lower gate network resolutions (Figure \ref{fig:Map_Network_Analysis}). The optimal trade-off is context dependent and different criteria in addition to epistemic uncertainty and gate network resolution should be considered to arrive at the most suitable combination. For example, users could choose to penalize gate combinations with a high epistemic uncertainty in specific areas and/or during specific periods, they could choose to improve the gate network resolution locally to better fit the research objectives or they could integrate the distance between gates and the detection probability in the selection process of section combinations. 
+
+\subsection{Comparison of the at-receivers and between-receivers approach}
+
+In passive acoustic telemetry studies, networks rarely have a full coverage, tagged animals are not located continuously and researchers need to predict where the animals reside while not being detected \citep{Heupel2006,Hedger2008,Trancart2017}. Currently used data processing methods based on residencies-at-receivers are strongly dependent on biological assumptions; if tagged fish are repeatedly detected within a time span below the absence threshold, they are presumed to reside in the area of the concerned receiver \citep{Vokoun2003}. Since the aim of most telemetry studies is to describe yet unknown biological features \citep{Hussey2015} and given the unpredictable nature of wildlife, making biological assumptions might be ambiguous. To predict the position of tagged animals, the between-receivers approach depends more strongly on the characteristics of the network, rather than on the characteristics of the animals themselves. As mentioned in Section \ref{subsec:Assessment of a passive acoustic telemetry network}, detection probability is key to successfully implement this approach. Hence, for large open areas, such as seas, where a large number of receivers is required to serve as gate, this method is less suitable \citep{Hobday2011EstimatingArrays}. For example, in the Westerschelde, which is between 2000 and 8000 m wide, on average 13 receivers per gate yield a detection probability of only 63.78 \%. In contrast, in the Zeeschelde, which is between 50 and 1350 m wide, on average 1.28 receivers per gate yield a detection probability of 96.61 \%.  
+
+The residencies-at-receivers obtained through absence thresholds turned out to be only poorly correlated (Pearson's \textit{r} ranging from 0.33 to 0.45) to the residencies-between-receivers (Fig. \ref{fig:correlation} and Fig. \ref{fig:Map_Network_Analysis}). In addition, the effect of the absence threshold itself turned out to be negligible. Therefore, the inability of the residencies-at-receivers to serve as a proxy for the time spent within a certain section, in combination with the lacking quantification of the epistemic uncertainty, underline the importance of the proposed approach based on gates. The preference for the between-receivers approach over the at-receivers approach in longitudinal aquatic systems may be intuitive, but the ability to quantify its added value can support researchers to decide on the design of their telemetry network. 
+
+\subsection{Suggestions to integrate both epistemic and statistical uncertainty}
+
+Since the main aim of this study was to quantify and reduce epistemic uncertainty, statistical uncertainty, which is the result of imperfect detectability, was not considered. However, in case detection probabilities are low, statistical uncertainty could be an important aspect to account for and methods that allow to integrate both types of uncertainty would be useful. Epistemic uncertainty is defined by a lack of knowledge and can therefore be reduced either by improving our understanding, e.g. more exact position estimates, or by balancing knowledge requirements, e.g. trade-off between spatial resolution and estimates of residency periods. Statistical uncertainty on the other hand is the sampling variability caused by the inherently irreducible stochasticity of detectability and animal movement \citep{Fox2011DistinguishingUncertainty}. Unlike epistemic uncertainty, for which only interval approximations can be determined, the statistical uncertainty can be described by probability distributions using traditional probabilistic methods \citep{Eldred2009EfficientElectronics}. As stochasticity is irreducible, the sampling variability or statistical uncertainty would not be reduced by the reduction of spatial resolution in the same way as the epistemic uncertainty. Instead, the rearrangement of gate sections would alter the gates serving as border to sections, affecting the detection probability of the network and as such statistical uncertainty
+
+To quantify and potentially reduce the combined epistemic and statistical uncertainty, a second-probability analysis could be used \citep{Sundgren2013UncertaintyProbability}. In practice, an additional nested iteration would be added to the optimization scheme, with multiple sets of epistemic uncertainty values (outer-loop) yielding an equal amount of cumulative distribution functions (CDFs) based on the statistical uncertainty (inner-loop) \citep{Eldred2009EfficientElectronics}. The bounds of this collection of CDFs at different probability levels (e.g. 2.5 \% and 97.5 \% for a 95\% CI) can be calculated and used as a combined measure of uncertainty \citep{Eldred2009EfficientElectronics}. In addition, to account for the spatiotemporal variability of the detection probability and resulting statistical uncertainty, environmental measurements and detection-range tests could be used to develop models describing the relationship between environmental conditions, detection range and detection probability \citep{Mathies2014EnvironmentalArrays,Reubens2018}. In turn, the uncertainty of this detection range model would need to be accounted for in the uncertainty propagation. It should be noted that, because of the additional iterations, the suggested individual-based optimization scheme for mixed uncertainty estimates and spatial re-scaling will become computationally much more expensive \citep{Eldred2009EfficientElectronics}. Therefore, future studies should also focus on the assessment of different optimization schemes by comparing different stochastic expansion and interval optimization methods \citep{Han2014InherentActuators,Terejanu2010ApproximateSystems}. 
+
+\section{Conclusion}
+
+Although passive acoustic telemetry allows one to obtain extensive data sets of multiple individuals, different sources of temporal and spatial uncertainty are present. Being aware of the epistemic uncertainty of telemetry data and the practical limitations of telemetry networks is paramount to allow optimal use. This novel approach based on gates may introduce new challenges to interpret the data correctly, but has two major advantages. Epistemic uncertainty of acoustic telemetry networks can be quantified and reduced at the cost of some spatial information by using gates as validation centers rather than geographical boundaries to residency estimates. The currently used data processing methods are undoubtedly useful in large open areas, but in one-dimensional river stretches a less ambiguous approach should be used whenever possible. Although this study was limited to just one river stretch, the method can be easily extended to other networks of longitudinal aquatic systems. The method could be extrapolated to other telemetry techniques such as radio, PIT or NEDAP Trail telemetry. 
+
+\section*{\ackname}
+
+This work was supported by the Flemish branch of the LifeWatch ESFRI observatory. P. Verhelst acknowledges the support of the Flemish Agency for Innovation and
+Entrepreneurship (VLAIO), now under the auspices of the National Science Fund FWO, during a large part of this study. R. Baeyens, N. De Maerteleire, S. Franquet, E. Gelaude, T. Lanssens, S. Pieters, K. Robberechts, T. Saerens, R. van der Speld, S. Vermeersch and Y. Verzelen assisted with the data collection. B. Lonneville aided in the creation of the map. This work makes use of data and infrastructure provided by VLIZ and INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. We would also like to thank the Royal Belgian Institute of Natural Sciences, Operational Directorate Natural Environment (RHIB Tuimelaar) for infrastructure provision and Rijkswaterstaat (The Netherlands) for their cooperation and the permission to use their marine buoys.
+
+\section*{\autcont}
+
+S.B. conceived the ideas and designed methodology, analyzed the data and led the writing of the manuscript; P.V., J.R. and S.B. collected the data; All authors contributed critically to the drafts and gave final approval for publication.
+
+\section*{\datacc}
+
+The R code, subset of data and documentation are available on Mendeley Data: \url{http://dx.doi.org/10.17632/8b4m7b3jnc.1}
+
+\newpage
+
+\bibliographystyle{elsarticle-harv-noURL}
+\bibliography{references}
+
+\newpage
+\FloatBarrier
+\input{Appendix.tex}
+
+\end{spacing}
+\end{document}
